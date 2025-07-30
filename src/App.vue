@@ -1,4 +1,19 @@
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      name: 'Francis Anyaegbu'
+    };
+  }
+};
+</script>
+
+
+
 <template>
-  <h1></h1>
+  <p>
+    {{ name }}
+  </p>
 </template>
 
