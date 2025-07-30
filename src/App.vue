@@ -1,12 +1,8 @@
-<script>
-export default {
-  name: 'App',
-  data() {
-    return {
-      name: 'Francis Anyaegbu'
-    };
-  }
-};
+<script setup>
+import { ref } from 'vue';  
+
+
+const name = ref("Francis Anyaegbu")
 </script>
 
 
