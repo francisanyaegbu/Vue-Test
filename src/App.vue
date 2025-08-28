@@ -25,5 +25,7 @@ onMounted(async() => {
 </script>
 
 <template>
-  <h1 class="bg-blue-500 text-2xl text-white">Hello Syca</h1>
+  <div>
+    <img src="" alt="Brand Logo">
+  </div>
 </template>
