@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 
 const options = {
   method: 'GET',
@@ -10,22 +10,33 @@ const options = {
 };
 
 const movies = ref(null);
+const bannerMovie = ref(null);
+
+const AsyncBanner = defineAsyncComponent(() => {
+  return import('./Banner.vue');
+});
 
 const getMovies = async () => {
-  movies.value = await fetch('https://api.themoviedb.org/3/authentication', options)
+  movies.value = await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc', options)
     .then(res => res.json())
     .then(res => res.results)
 }
 
+const getRandomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 onMounted(async() => {
   await getMovies();
-  console.log(movies.value);
+  bannerMovie.value = movies.value[getRandomInt(0, movies.value.length - 1)];
+
 })
 
 </script>
 
 <template>
-  <div>
-    <img src="" alt="Brand Logo">
-  </div>
+
+    <AsyncBanner 
+    :banner="bannerMovie"/>
+
 </template>
