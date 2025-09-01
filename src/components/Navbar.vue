@@ -1,13 +1,14 @@
 <script setup>
-import { PhFilmSlate } from '@phosphor-icons/vue'
+import { PhFilmReel } from '@phosphor-icons/vue'
 </script>
 
 <template>
     <nav 
     class="flex text-white items-center gap-20 absolute left-0 right-0 mx-6 py-4 top-4 bg-transparent border-b-2 border-neutal-400">
 
-    <div>
-        <PhFilmSlate :size="32" />
+    <div class="flex text-3xl items-center gap-2 font-bold">
+        <PhFilmReel :size="35" />
+        <span>Movly</span>
     </div>
 
     <div>

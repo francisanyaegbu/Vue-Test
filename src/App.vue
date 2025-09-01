@@ -1,6 +1,8 @@
 <script setup>
-import { ref, onMounted, defineAsyncComponent } from 'vue'
+import { ref, onBeforeMount, defineAsyncComponent } from 'vue'
+import {RouterView} from 'vue-router'
 import Navbar from './components/navbar.vue'
+import MovieList from './components/MovieList.vue'
 
 const options = {
   method: 'GET',
@@ -11,7 +13,7 @@ const options = {
   },
 }
 
-const movies = ref(null)
+const movies = ref([])
 const bannerMovie = ref(null)
 
 const AsyncBanner = defineAsyncComponent(() => {
@@ -31,7 +33,7 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await getMovies()
   bannerMovie.value = movies.value[getRandomInt(0, movies.value.length - 1)]
 })
@@ -40,4 +42,6 @@ onMounted(async () => {
 <template>
   <Navbar />
   <AsyncBanner :banner="bannerMovie" />
+  <MovieList 
+  :movies="movies" />
 </template>
