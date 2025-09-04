@@ -17,7 +17,7 @@ const movies = ref([])
 const bannerMovie = ref(null)
 
 const AsyncBanner = defineAsyncComponent(() => {
-  return import('./components/Banner.vue')
+  return import('../components/Banner.vue')
 })
 
 const getMovies = async () => {
