@@ -1,22 +1,4 @@
 <script setup>
-
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NTg0YzZhYTc3N2YyYWYwODRmZjI1NWYxNzM3NWY0NSIsIm5iZiI6MTc1NjI5OTg0Ny40NTIsInN1YiI6IjY4YWYwMjQ3YzI3ZDMyZTQ2YzRlYmNlZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.drHUYJqZ5Hrpf9Vh3d_fZQEv_LSQucxS1gU7lMLX6js'
-  }
-};
-
-const search = async () => {
-  search.value = await fetch(
-    'https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1', options
-  )
-    .then(res => res.json())
-}
-
-console.log(search);
-
 import { PhFilmReel } from '@phosphor-icons/vue'
 import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 </script>
@@ -38,8 +20,7 @@ import { PhMagnifyingGlass } from '@phosphor-icons/vue'
             <div class="flex items-center gap-2 border-2 border-neutral-400 rounded-md px-4 py-1">
                 <input type="search" name="search-movie" id="search-movie" placeholder="Search for a movie..."
                 class="bg-transparent border-2 border-none focus:outline-none focus:border-none"/>
-                <PhMagnifyingGlass :size="22" class="text-neutral-500 cursor-pointer"
-                @click="search" />
+                <PhMagnifyingGlass :size="22" class="text-neutral-500 cursor-pointer" />
             </div>
         </div>
         

@@ -1,7 +1,5 @@
 <script setup>
 import { ref, onBeforeMount, defineAsyncComponent } from 'vue'
-// import {RouterView} from 'vue-router'
-import Navbar from '../components/Navbar.vue'
 import MovieList from '../components/MovieList.vue'
 
 const options = {
@@ -42,8 +40,7 @@ onBeforeMount(async () => {
 
 
 
-<template>
-  <Navbar />
+<template> 
   <AsyncBanner 
   :banner="bannerMovie" />
   <MovieList 
