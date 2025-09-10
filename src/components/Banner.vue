@@ -1,6 +1,7 @@
 <script setup>
 import getImage from '../lib/getImage.js'
 import { PhPlay } from '@phosphor-icons/vue'
+import { RouterLink } from 'vue-router'
 
 const { banner } = defineProps(['banner'])
 const {
@@ -30,12 +31,13 @@ const description = overview.length <= 200 ? overview : overview.slice(0, 200) +
       <h1 class="text-8xl font-bold">{{ title }}</h1>
       <p class="mt-2 w-1/2 text-sm text-neutral-400">{{ description }}</p>
 
-      <button
+      <RouterLink
+        :to="`/movie/${banner.id}`"
         class="flex items-center gap-1 px-6 py-4 rounded-md bg-green-700 w-fit mt-4 transition hover:bg-neutral-800"
       >
         <span> View more</span>
         <span><PhPlay /></span>
-      </button>
+      </RouterLink>
     </div>
   </div>
 </template>

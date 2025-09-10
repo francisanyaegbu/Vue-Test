@@ -1,16 +1,16 @@
 <script setup>
-import { PhFilmReel } from '@phosphor-icons/vue'
-import { PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhFilmReel, PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
     <nav 
         class="flex text-white items-center gap-20 absolute left-0 right-0 mx-6 py-4 top-4 bg-transparent border-b-2 border-neutal-400">
 
-        <div class="flex text-3xl items-center gap-2 font-bold">
+        <RouterLink to="/" class="flex text-3xl items-center gap-2 font-bold">
             <PhFilmReel :size="35" />
             <span>Movly</span>
-        </div>
+        </RouterLink>
 
         <div class="flex justify-between items-center w-full">
             <ul class="flex items-center gap-4 font-semibold">
