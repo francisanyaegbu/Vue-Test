@@ -4,14 +4,16 @@ import { PhPlay } from '@phosphor-icons/vue'
 import { RouterLink } from 'vue-router'
 
 const { banner } = defineProps(['banner'])
+
+// if banner isn't ready, provide defaults to avoid JS errors
 const {
-  title,
-  overview,
-  backdrop_path: background,
-  release_date,
-  vote_average: vote,
-  original_language: language,
-} = banner
+  title = '',
+  overview = '',
+  backdrop_path: background = '',
+  release_date = '',
+  vote_average: vote = 0,
+  original_language: language = '',
+} = banner || {}
 
 const description = overview.length <= 200 ? overview : overview.slice(0, 200) + '...'
 </script>
@@ -28,8 +30,8 @@ const description = overview.length <= 200 ? overview : overview.slice(0, 200) +
     <div
       class="text-white p-10 flex flex-col justify-center w-full h-full bg-gradient-to-r from-black to-transparent"
     >
-      <h1 class="text-8xl font-bold">{{ title }}</h1>
-      <p class="mt-2 w-1/2 text-sm text-neutral-400">{{ description }}</p>
+      <h1 class="text-4xl sm:text-6xl lg:text-8xl font-bold">{{ title }}</h1>
+      <p class="mt-2 w-full sm:w-3/4 lg:w-1/2 text-sm sm:text-base text-neutral-400">{{ description }}</p>
 
       <RouterLink
         :to="`/movie/${banner.id}`"

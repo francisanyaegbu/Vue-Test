@@ -19,12 +19,16 @@ const AsyncBanner = defineAsyncComponent(() => {
 })
 
 const getMovies = async () => {
-  movies.value = await fetch(
-    'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc',
-    options,
-  )
-    .then((res) => res.json())
-    .then((res) => res.results)
+  try {
+    const data = await fetch(
+      'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc',
+      options,
+    ).then((res) => res.json())
+    movies.value = data.results || []
+    console.log('fetched movies', movies.value)
+  } catch (err) {
+    console.error('error fetching movies', err)
+  }
 }
 
 const getRandomInt = (min, max) => {
@@ -33,7 +37,12 @@ const getRandomInt = (min, max) => {
 
 onBeforeMount(async () => {
   await getMovies()
-  bannerMovie.value = movies.value[getRandomInt(0, movies.value.length - 1)]
+  if (movies.value.length > 0) {
+    bannerMovie.value = movies.value[getRandomInt(0, movies.value.length - 1)]
+    console.log('selected banner', bannerMovie.value)
+  } else {
+    console.warn('no movies available for banner')
+  }
 })
 </script>
 
@@ -41,9 +50,12 @@ onBeforeMount(async () => {
 
 
 <template> 
+  <!-- only show banner when data available to prevent runtime error -->
   <AsyncBanner 
-  :banner="bannerMovie" />
+    v-if="bannerMovie" 
+    :banner="bannerMovie" />
+
   <MovieList 
-  :movies="movies" 
+    :items="movies" 
   />
 </template>
