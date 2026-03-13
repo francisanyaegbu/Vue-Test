@@ -1,11 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { PhFilmReel, PhMagnifyingGlass, PhList, PhX } from '@phosphor-icons/vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 const router = useRouter()
 const searchQuery = ref('')
 const isMenuOpen = ref(false)
+const isScrolled = ref(false)
 
 function submitSearch() {
   if (!searchQuery.value.trim()) return
@@ -20,11 +21,26 @@ function toggleMenu() {
 function closeMenu() {
   isMenuOpen.value = false
 }
+
+function handleScroll() {
+  isScrolled.value = window.scrollY > 50
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
     <nav 
-        class="fixed flex justify-between md:flex-row text-white items-center gap-4 md:gap-20 left-0 right-0 mx-4 md:mx-6 py-4 top-0 bg-transparent">
+        :class="[
+          'fixed flex justify-between md:flex-row text-white items-center gap-4 md:gap-20 px-4 left-0 right-0 md:mx-6 py-4 top-0 z-50 transition-all duration-300',
+          isScrolled ? 'bg-black bg-opacity-80 backdrop-blur-sm' : 'bg-transparent'
+        ]">
 
         <!-- Mobile left: menu button -->
         <div class="md:hidden">

@@ -37,19 +37,19 @@ const movieDuration = Math.round(runtime / 60) + 'h ' + (runtime % 60) + 'm';
 </script>
 
 <template>
-    <div class="h-screen w-screen grayscale-100"
+    <div class="h-full w-full grayscale-100"
     :style = "{
         backgroundImage: `url(`+getImage(background)+`)`,
     }">
 
         <div class="w-full h-full bg-gradient-to-r from-black to-transaprent">
 
-            <div class="pt-20 w-full h-full grid grid-cols-2 items-center ">
+            <div class="pt-20 w-full h-full grid lg:grid-cols-2 items-center gap-5">
                 <img
-                 class="w-[300px] mx-auto rounded-lg" 
+                 class="lg:w-[300px] w-[70%] mx-auto rounded-lg" 
                  :src="getImage(poster)"
                  />
-                <div>
+                <div class="flex flex-col items-center">
                     <h1 class="text-4xl font-semi-bold mb-4">{{ title }}</h1>
                     <p class=" text-sm text-neutral-300 w-2/3">{{ overview }}</p>
                     <div class="flex flex-col text-sm gap-2 mt-3">
