@@ -5,6 +5,8 @@ import { PhPlay } from '@phosphor-icons/vue'
 import { PhStar } from '@phosphor-icons/vue'
 import { RouterLink } from 'vue-router'
 import { useMediaStore } from '../stores/media'
+import TrailerPlayer from './TrailerPlayer.vue'
+import { ref } from 'vue'
 
 const { movie } = defineProps({
     'movie': Object
@@ -23,10 +25,18 @@ const description = overview.length <= 60 ? overview : overview.slice(0, 60) + '
 
 const mediaStore = useMediaStore()
 
+const showTrailer = ref(false)
+const trailerKey = ref('')
+
 function openTrailer() {
   getTrailer(mediaType, movie.id).then((url) => {
-    if (url) window.open(url, '_blank')
-    else alert('Trailer not found')
+    if (url) {
+      const key = url.split('v=')[1]
+      trailerKey.value = key
+      showTrailer.value = true
+    } else {
+      alert('Trailer not found')
+    }
   })
 }
 
@@ -46,10 +56,10 @@ function isFav() {
     <RouterLink :to="mediaType === 'tv' ? `/tv/${movie.id}` : `/movie/${movie.id}`">
         <div class="w-full h-full grid grid-rows-[4fr_1fr]">
 
-            <div class="relative group w-full h-full">
+            <div class="relative group w-full h-full aspect-[2/3]">
                 <img
                 :src="getImage(poster)"
-                class="w-full h-full transition rounded-md group-hover:blur-sm cursor-pointer"
+                class="w-full h-full transition rounded-md cursor-pointer"
                 />
                 <div class="group-hover:opacity-100 transition-opacity opacity-0 absolute left-[-50%] top-[50%] translate-x-[50%] flex flex-col gap-2 w-full font-semibold text-white">
                     <div class="w-full flex flex-col items-center justify-center">
@@ -58,14 +68,7 @@ function isFav() {
                         </button>
                     </div>
                 </div>
-                <div class="absolute top-2 right-2 flex flex-col gap-1">
-                    <button @click.stop.prevent="toggleFav" class="p-1">
-                        <PhStar
-                          :size="20"
-                          :weight="isFav() ? 'fill' : 'regular'"
-                          color="#ffffff"
-                        />
-                    </button>
+                <div class="absolute top-2 right-2 flex gap-1">
                     <div class="px-2 bg-emerald-600 py-1 rounded-md">
                         <p class="flex items-center gap-1 justify-center">
                             <span>{{ Math.ceil(vote * 10) / 10 }}</span>
@@ -73,12 +76,20 @@ function isFav() {
                         </p>
                     </div>
                 </div>
+                <button @click.stop.prevent="toggleFav" class="p-1 bottom-1 absolute left-1">
+                    <PhStar
+                        :size="20"
+                        :weight="isFav() ? 'fill' : 'regular'"
+                        color="#ffffff"
+                    />
+                </button>
                 <div>
-                    <h1 class="text-xl font-semibold my-2">{{ title }}</h1>
-                    <p class="text-neutral-400 text-sm">{{ description }}</p>
+                    <h1 class="lg:text-xl text-sm font-semibold my-2">{{ title }}</h1>
+                    <p class="hidden lg:block lg:text-neutral-400 lg:text-sm">{{ description }}</p>
                 </div>
             </div>
     
         </div>
     </RouterLink>
+    <TrailerPlayer :video-key="trailerKey" :show="showTrailer" @close="showTrailer = false" />
 </template>
